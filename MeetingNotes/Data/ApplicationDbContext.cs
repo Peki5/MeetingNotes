@@ -1,13 +1,22 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using MeetingNotes.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MeetingNotes.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
+        }
+        public DbSet<Worker> Workers { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Worker>().ToTable("Worker");
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
