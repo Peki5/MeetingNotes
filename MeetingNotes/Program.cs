@@ -46,6 +46,8 @@ namespace MeetingNotes
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
+            app.SeedData();
+
             app.Run();
         }
     }
