@@ -42,7 +42,7 @@ namespace MeetingNotes.Controllers
             }
 
             var worker = await _context.Workers
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.WorkerId == id);
             if (worker == null)
             {
                 return NotFound();
@@ -96,7 +96,7 @@ namespace MeetingNotes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Username,Password,LastName,FirstName")] Worker worker)
         {
-            if (id != worker.Id)
+            if (id != worker.WorkerId)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ namespace MeetingNotes.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!WorkerExists(worker.Id))
+                    if (!WorkerExists(worker.WorkerId))
                     {
                         return NotFound();
                     }
@@ -133,7 +133,7 @@ namespace MeetingNotes.Controllers
             }
 
             var worker = await _context.Workers
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.WorkerId == id);
             if (worker == null)
             {
                 return NotFound();
@@ -163,7 +163,7 @@ namespace MeetingNotes.Controllers
 
         private bool WorkerExists(int id)
         {
-            return (_context.Workers?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Workers?.Any(e => e.WorkerId == id)).GetValueOrDefault();
         }
     }
 }

@@ -19,14 +19,14 @@ namespace MeetingNotes.Services
         }
         public Worker? GetWorkerById(int id)
         {
-            var worker= _db.Workers.Where(w => w.Id==id).FirstOrDefault();//firstordefault se brine da vrati null ako nema npr nekog workera sa odredenim id
+            var worker= _db.Workers.Where(w => w.WorkerId == id).FirstOrDefault();//firstordefault se brine da vrati null ako nema npr nekog workera sa odredenim id
             return worker;
         }
         public int CreateWorker(Worker worker)
         {
             _db.Workers.Add(worker);
             _db.SaveChanges();
-            return worker.Id;
+            return worker.WorkerId;
         }
         public IEnumerable<Worker> GetWorkers() 
         {

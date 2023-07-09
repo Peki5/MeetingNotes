@@ -6,7 +6,7 @@ namespace MeetingNotes.Models
 {
     public class Worker
     {
-        public int Id { get; set; }
+        public int WorkerId { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
 
