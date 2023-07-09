@@ -1,16 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace MeetingNotes.Models
 {
     public class Worker
     {
         public int Id { get; set; }
-        public string Email { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime EnrollmentDate { get; set; }
+
+        public IdentityUser? IdentityUser { get; set; } 
+
+        public int userId { get; set; }
     }
 }
 
