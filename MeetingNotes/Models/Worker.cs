@@ -14,7 +14,7 @@ namespace MeetingNotes.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime EnrollmentDate { get; set; }
 
-        public IdentityUser? IdentityUser { get; set; } 
+        public IdentityUser IdentityUser { get; set; } 
 
         public int userId { get; set; }
     }
