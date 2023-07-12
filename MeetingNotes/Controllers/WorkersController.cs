@@ -63,7 +63,7 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,LastName,FirstName,EnrollmentDate")] Worker worker)
+        public async Task<IActionResult> Create([Bind("WorkerId,LastName,FirstName,EnrollmentDate,IsManager")] Worker worker)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("WorkerId,LastName,FirstName,EnrollmentDate")] Worker worker)
+        public async Task<IActionResult> Edit([Bind("WorkerId,LastName,FirstName,EnrollmentDate,IsManager")] Worker worker)
         {
             if (worker.WorkerId==null)
             {
@@ -135,7 +135,7 @@ namespace MeetingNotes.Controllers
             {
                 return NotFound();
             }
-
+                
             //var worker = await _context.Workers
             //.FirstOrDefaultAsync(m => m.WorkerId == id);
             var worker = _workerService.GetWorkerById(id);

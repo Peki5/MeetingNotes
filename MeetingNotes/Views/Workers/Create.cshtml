@@ -28,6 +28,11 @@
                 <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="IsManager" class="control-label"></label>
+                <input type="checkbox" asp-for="IsManager" class="form-check-control" />
+                <span asp-validation-for="IsManager" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
