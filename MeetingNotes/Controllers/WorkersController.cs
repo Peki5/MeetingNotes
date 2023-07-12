@@ -34,15 +34,16 @@ namespace MeetingNotes.Controllers
         }
 
         // GET: Workers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.Workers == null)
             {
                 return NotFound();
             }
 
-            var worker = await _context.Workers
-                .FirstOrDefaultAsync(m => m.WorkerId == id);
+            //var worker = await _context.Workers
+                //.FirstOrDefaultAsync(m => m.WorkerId == id);
+            var worker = _workerService.GetWorkerById(id);
             if (worker == null)
             {
                 return NotFound();
@@ -62,26 +63,28 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Username,Password,LastName,FirstName")] Worker worker)
+        public async Task<IActionResult> Create([Bind("Id,LastName,FirstName,EnrollmentDate")] Worker worker)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(worker);
-                await _context.SaveChangesAsync();
+                //_context.Add(worker);
+                //await _context.SaveChangesAsync();
+                _workerService.CreateWorker(worker);
                 return RedirectToAction(nameof(Index));
             }
             return View(worker);
         }
 
         // GET: Workers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null || _context.Workers == null)
             {
                 return NotFound();
             }
 
-            var worker = await _context.Workers.FindAsync(id);
+            //var worker = await _context.Workers.FindAsync(id);
+            var worker = _workerService.GetWorkerById(id);
             if (worker == null)
             {
                 return NotFound();
@@ -94,9 +97,9 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Username,Password,LastName,FirstName")] Worker worker)
+        public async Task<IActionResult> Edit([Bind("WorkerId,LastName,FirstName,EnrollmentDate")] Worker worker)
         {
-            if (id != worker.WorkerId)
+            if (worker.WorkerId==null)
             {
                 return NotFound();
             }
@@ -105,8 +108,9 @@ namespace MeetingNotes.Controllers
             {
                 try
                 {
-                    _context.Update(worker);
-                    await _context.SaveChangesAsync();
+                    //_context.Update(worker);
+                    //await _context.SaveChangesAsync();
+                    _workerService.EditWorker(worker);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -125,16 +129,17 @@ namespace MeetingNotes.Controllers
         }
 
         // GET: Workers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null || _context.Workers == null)
             {
                 return NotFound();
             }
 
-            var worker = await _context.Workers
-                .FirstOrDefaultAsync(m => m.WorkerId == id);
-            if (worker == null)
+            //var worker = await _context.Workers
+            //.FirstOrDefaultAsync(m => m.WorkerId == id);
+            var worker = _workerService.GetWorkerById(id);
+            if (!WorkerExists(worker.WorkerId))
             {
                 return NotFound();
             }
@@ -151,19 +156,21 @@ namespace MeetingNotes.Controllers
             {
                 return Problem("Entity set 'ApplicationDbContext.Workers'  is null.");
             }
-            var worker = await _context.Workers.FindAsync(id);
-            if (worker != null)
-            {
-                _context.Workers.Remove(worker);
-            }
+            //var worker = await _context.Workers.FindAsync(id);
+            //if (worker != null)
+            //{
+            //    _context.Workers.Remove(worker);
+            //}
+            var worker = _workerService.DeleteWorker(id);
 
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool WorkerExists(int id)
         {
-            return (_context.Workers?.Any(e => e.WorkerId == id)).GetValueOrDefault();
+            //return (_context.Workers?.Any(e => e.WorkerId == id)).GetValueOrDefault();
+            return _workerService.GetWorkerById(id) != null;
         }
     }
 }

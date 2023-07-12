@@ -8,7 +8,10 @@ namespace MeetingNotes.Services
     {
         Worker? GetWorkerById (int id);
         int CreateWorker(Worker worker);
-        public IEnumerable<Worker> GetWorkers();
+        IEnumerable<Worker> GetWorkers();
+        int DeleteWorker(int id);
+
+        int EditWorker(Worker worker);
     }
     public class WorkerServices : IWorkerService
     {
@@ -28,7 +31,22 @@ namespace MeetingNotes.Services
             _db.SaveChanges();
             return worker.WorkerId;
         }
-        public IEnumerable<Worker> GetWorkers() 
+        public int DeleteWorker(int id)
+        {
+            var worker = _db.Workers.Where(w => w.WorkerId == id).FirstOrDefault();
+            _db.Workers.Remove(worker);
+            _db.SaveChanges();
+            return worker.WorkerId;
+        }
+
+        public int EditWorker(Worker worker)
+        {
+            //var worker = _db.Workers.Where(w => w.WorkerId == id).FirstOrDefault();
+            _db.Workers.Update(worker);
+            _db.SaveChanges();
+            return worker.WorkerId;
+        }
+        public IEnumerable<Worker> GetWorkers()
         {
             return _db.Workers.ToList();
         }
