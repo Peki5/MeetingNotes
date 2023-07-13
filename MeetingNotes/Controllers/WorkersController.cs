@@ -161,7 +161,7 @@ namespace MeetingNotes.Controllers
             //{
             //    _context.Workers.Remove(worker);
             //}
-            var worker = _workerService.DeleteWorker(id);
+            _workerService.DeleteWorker(id);
 
             //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
