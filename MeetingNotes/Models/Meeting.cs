@@ -6,7 +6,7 @@ namespace MeetingNotes.Models
     {
         public int MeetingId { get; set; }
 
-        public DateOnly MeetingDate { get; set; }
+        public DateTime MeetingDate { get; set; }
 
         public int ManagerId;
         public int WorkerId;
