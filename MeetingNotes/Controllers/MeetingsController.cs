@@ -98,9 +98,9 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MeetingId,MeetingDate")] Meeting meeting)
+        public async Task<IActionResult> Edit([Bind("MeetingId,MeetingDate,notes.NotesId,notes.NotesText")] Meeting meeting)
         {
-            if (id != meeting.MeetingId)
+            if (meeting.MeetingId == null)
             {
                 return NotFound();
             }

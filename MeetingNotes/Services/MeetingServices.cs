@@ -1,5 +1,6 @@
 ﻿using MeetingNotes.Data;
 using MeetingNotes.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 
 namespace MeetingNotes.Services
@@ -27,7 +28,7 @@ namespace MeetingNotes.Services
         }
         public Meeting? GetMeetingById(int id)
         {
-            var meeting = _db.Meetings.Where(w=>w.MeetingId==id).FirstOrDefault();
+            var meeting = _db.Meetings.Where(w=>w.MeetingId==id).Include(s=>s.notes).AsNoTracking().FirstOrDefault();
             return meeting;
         }
         public int CreateMeeting(Meeting meeting)

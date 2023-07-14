@@ -1,6 +1,4 @@
-﻿@using MeetingNotes.Models
-
-@model MeetingNotes.Models.Meeting
+﻿@model MeetingNotes.Models.Meeting
 
 @{
     ViewData["Title"] = "Details";
@@ -23,12 +21,15 @@
         </dt>
         <dd class="col-sm-10">
             <table class="table">
-                <tr>
-                    <th>Text</th>
-                </tr>
-                <tr>
-                    <td>@Model.notes.NotesText</td>
-                </tr>
+                @if (Model.notes != null)
+                {
+                    <p>Note ID: @Model.notes.NotesId</p>
+                    <p>Note Text: @Model.notes.NotesText</p>
+                }
+                else
+                {
+                    <p>No note associated with this meeting.</p>
+                }
             </table>
         </dd>
     </dl>
