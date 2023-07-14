@@ -61,7 +61,7 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NotesId,NotesText")] Notes notes)
+        public async Task<IActionResult> Create(Notes notes)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("NotesId,NotesText")] Notes notes)
+        public async Task<IActionResult> Edit(Notes notes)
         {
             if (notes.NotesId==null)
             {

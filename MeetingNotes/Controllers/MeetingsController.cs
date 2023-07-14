@@ -63,7 +63,7 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MeetingId,MeetingDate")] Meeting meeting)
+        public async Task<IActionResult> Create(Meeting meeting)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("MeetingId,MeetingDate,notes.NotesId,notes.NotesText")] Meeting meeting)
+        public async Task<IActionResult> Edit(Meeting meeting)
         {
             if (meeting.MeetingId == null)
             {
@@ -163,8 +163,8 @@ namespace MeetingNotes.Controllers
             //    _context.Meetings.Remove(meeting);
             //}
             _meetingService.DeleteMeeting(id);
-            var meeting = _meetingService.GetMeetingById(id);
-            _notesService.DeleteNote(meeting.notes.NotesId);//ako brisem meeting brisem i njegov notes
+            //var meeting = _meetingService.GetMeetingById(id);
+            //_notesService.DeleteNote(meeting.notes.NotesId);//ako brisem meeting brisem i njegov notes
             //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
