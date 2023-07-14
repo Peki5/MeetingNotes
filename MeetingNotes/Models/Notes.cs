@@ -6,6 +6,7 @@
 
         public string NotesText { get; set; }
         
-
+        public int MeetingId { get; set; } 
     }
 }
+    

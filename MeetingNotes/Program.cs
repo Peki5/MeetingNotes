@@ -21,7 +21,9 @@ namespace MeetingNotes
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<IWorkerService, WorkerServices>();//dz proucit ovo
-
+            builder.Services.AddTransient<IMeetingService, MeetingServices>();
+            builder.Services.AddTransient<INotesService, NotesServices>();
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

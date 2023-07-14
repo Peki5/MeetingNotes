@@ -4,6 +4,7 @@ using MeetingNotes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingNotes.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230713105549_add_notes_var_into_meeting")]
+    partial class add_notes_var_into_meeting
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +49,12 @@ namespace MeetingNotes.Data.Migrations
                     b.Property<DateTime>("MeetingDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NotesId1")
+                        .HasColumnType("int");
+
                     b.HasKey("MeetingId");
+
+                    b.HasIndex("NotesId1");
 
                     b.ToTable("Meeting", (string)null);
                 });
@@ -59,17 +67,11 @@ namespace MeetingNotes.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotesId"));
 
-                    b.Property<int>("MeetingId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NotesText")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("NotesId");
-
-                    b.HasIndex("MeetingId")
-                        .IsUnique();
 
                     b.ToTable("Notes", (string)null);
                 });
@@ -316,13 +318,15 @@ namespace MeetingNotes.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MeetingNotes.Models.Notes", b =>
+            modelBuilder.Entity("MeetingNotes.Models.Meeting", b =>
                 {
-                    b.HasOne("MeetingNotes.Models.Meeting", null)
-                        .WithOne("notes")
-                        .HasForeignKey("MeetingNotes.Models.Notes", "MeetingId")
+                    b.HasOne("MeetingNotes.Models.Notes", "notes")
+                        .WithMany()
+                        .HasForeignKey("NotesId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("notes");
                 });
 
             modelBuilder.Entity("MeetingNotes.Models.Worker", b =>
@@ -392,12 +396,6 @@ namespace MeetingNotes.Data.Migrations
             modelBuilder.Entity("MeetingNotes.Models.Manager", b =>
                 {
                     b.Navigation("Workers");
-                });
-
-            modelBuilder.Entity("MeetingNotes.Models.Meeting", b =>
-                {
-                    b.Navigation("notes")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

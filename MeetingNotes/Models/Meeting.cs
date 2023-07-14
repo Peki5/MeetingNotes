@@ -10,7 +10,8 @@ namespace MeetingNotes.Models
 
         public int ManagerId;
         public int WorkerId;
-        public int NotesId;
+
+        public Notes notes { get; set; }
 
     }
 }
