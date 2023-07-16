@@ -7,11 +7,12 @@ namespace MeetingNotes.Models
         public int MeetingId { get; set; }
 
         public DateTime MeetingDate { get; set; }
-
-        public int ManagerId;
-        public int WorkerId;
-
+        [Required]
+        public int ManagerId { get; set; }
+        [Required]
+        public int WorkerId { get; set; }
         public Notes notes { get; set; }
+
 
     }
 }

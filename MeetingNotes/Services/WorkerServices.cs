@@ -1,6 +1,7 @@
 ﻿using MeetingNotes.Data;
 using MeetingNotes.Models;
 using System.Numerics;
+using MeetingNotes.Services;
 
 namespace MeetingNotes.Services
 {
@@ -29,6 +30,13 @@ namespace MeetingNotes.Services
         {
             _db.Workers.Add(worker);
             _db.SaveChanges();
+            if (worker.IsManager==true)
+            {
+                var manager= new Manager();
+                manager.WorkerId = worker.WorkerId;
+                _db.Managers.Add(manager);
+                _db.SaveChanges();
+            }
             return worker.WorkerId;
         }
         public void DeleteWorker(int id)
@@ -36,11 +44,31 @@ namespace MeetingNotes.Services
             var worker = _db.Workers.Where(w => w.WorkerId == id).FirstOrDefault();
             _db.Workers.Remove(worker);
             _db.SaveChanges();
+            if (worker.IsManager == true)
+            {
+                var manager = _db.Managers.Where(w => w.WorkerId == worker.WorkerId).FirstOrDefault();
+                _db.Managers.Remove(manager);
+                _db.SaveChanges();
+            }
         }
 
         public int EditWorker(Worker worker)
         {
             //var worker = _db.Workers.Where(w => w.WorkerId == id).FirstOrDefault();
+            if (worker.IsManager==false)
+            {
+                var manager = _db.Managers.Where(w => w.WorkerId == worker.WorkerId).FirstOrDefault();
+                _db.Managers.Remove(manager);
+                _db.SaveChanges();
+            }
+            if (worker.IsManager == true)
+            {
+                var manager = new Manager();
+                //var manager = _db.Managers.Where(w => w.WorkerId == worker.WorkerId).FirstOrDefault();
+                manager.WorkerId= worker.WorkerId;
+                _db.Managers.Add(manager);
+                _db.SaveChanges();
+            }
             _db.Workers.Update(worker);
             _db.SaveChanges();
             return worker.WorkerId;

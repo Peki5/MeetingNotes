@@ -13,14 +13,25 @@
     <thead>
         <tr>
             <th>
+                Manager
+            </th>
+            <th>
+                Worker
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.MeetingDate)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ManagerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkerId)
+            </td>       
             <td>
                 @Html.DisplayFor(modelItem => item.MeetingDate)
             </td>

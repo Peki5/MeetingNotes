@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using MeetingNotes.Services;
 
 
 namespace MeetingNotes.Data
@@ -25,6 +26,20 @@ namespace MeetingNotes.Data
         public static void Initialize(ApplicationDbContext context)
         {
             context.Database.Migrate();
+            if (!context.Managers.Any())
+            {
+                foreach (Worker worker in context.Workers)
+                {
+                    if (worker.IsManager == true)
+                    {
+                        var manager = new Manager();
+                        manager.WorkerId = worker.WorkerId;
+                        context.Managers.Add(manager);
+                        context.SaveChanges();
+                    }
+                }
+            }
+
             if (context.Workers.Any())
             {
                 return;   // DB has been seeded
@@ -61,6 +76,21 @@ namespace MeetingNotes.Data
                 context.Notes.Add(n);
             }
             context.SaveChanges();
+
+           
+            if (!context.Managers.Any())
+            {
+                foreach (Worker worker in context.Workers)
+                {
+                    if (worker.IsManager==true)
+                    {
+                        var manager = new Manager();
+                        manager.WorkerId = worker.WorkerId;
+                        context.Managers.Add(manager);
+                        context.SaveChanges();
+                    }
+                }
+            }
         }
     }
 }
