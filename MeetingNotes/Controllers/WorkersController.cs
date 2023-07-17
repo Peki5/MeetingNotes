@@ -48,7 +48,7 @@ namespace MeetingNotes.Controllers
             }
 
             //var worker = await _context.Workers
-                //.FirstOrDefaultAsync(m => m.WorkerId == id);
+            //.FirstOrDefaultAsync(m => m.WorkerId == id);
             var worker = _workerService.GetWorkerById(id);
             if (worker == null)
             {
@@ -105,7 +105,7 @@ namespace MeetingNotes.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("WorkerId,LastName,FirstName,EnrollmentDate,IsManager")] Worker worker)
         {
-            if (worker.WorkerId==null)
+            if (worker.WorkerId == null)
             {
                 return NotFound();
             }
@@ -141,7 +141,7 @@ namespace MeetingNotes.Controllers
             {
                 return NotFound();
             }
-                
+
             //var worker = await _context.Workers
             //.FirstOrDefaultAsync(m => m.WorkerId == id);
             var worker = _workerService.GetWorkerById(id);

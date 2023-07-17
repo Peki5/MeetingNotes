@@ -64,56 +64,56 @@ namespace MeetingNotes.Data
                 context.SaveChanges();
             }
             if (context.Workers.Any())
-                {
-                    return;   // DB has been seeded
-                }
-                var workers = new Worker[]
-                {
+            {
+                return;   // DB has been seeded
+            }
+            var workers = new Worker[]
+            {
                 new Worker{ LastName="Horvat", FirstName="Ivan", EnrollmentDate= DateTime.Parse("2010-09-01")},
                 new Worker{ LastName="Marić", FirstName="Marko", EnrollmentDate= DateTime.Parse("2022-02-02")}
-                };
-                foreach (Worker w in workers)
-                {
-                    context.Workers.Add(w);
-                }
-                context.SaveChanges();
+            };
+            foreach (Worker w in workers)
+            {
+                context.Workers.Add(w);
+            }
+            context.SaveChanges();
 
-                var meeting = new Meeting[]
-                {
+            var meeting = new Meeting[]
+            {
                 new Meeting{ MeetingDate=DateTime.Parse("2013-04-05")},
                 new Meeting{ MeetingDate=DateTime.Parse("2014-07-08")}
-                };
-                foreach (Meeting m in meeting)
-                {
-                    context.Meetings.Add(m);
-                }
-                context.SaveChanges();
+            };
+            foreach (Meeting m in meeting)
+            {
+                context.Meetings.Add(m);
+            }
+            context.SaveChanges();
 
-                var notes = new Notes[]
-                {
+            var notes = new Notes[]
+            {
                 new Notes{ NotesText="Uvodni sastanak u firmi",
                     MeetingId=meeting.Single(s=>s.MeetingDate.Equals("2013-04-05")).MeetingId}
-                };
-                foreach (Notes n in notes)
-                {
-                    context.Notes.Add(n);
-                }
-                context.SaveChanges();
+            };
+            foreach (Notes n in notes)
+            {
+                context.Notes.Add(n);
+            }
+            context.SaveChanges();
 
 
-                if (!context.Managers.Any())
+            if (!context.Managers.Any())
+            {
+                foreach (Worker worker in context.Workers)
                 {
-                    foreach (Worker worker in context.Workers)
+                    if (worker.IsManager == true)
                     {
-                        if (worker.IsManager == true)
-                        {
-                            var manager = new Manager();
-                            manager.WorkerId = worker.WorkerId;
-                            context.Managers.Add(manager);
-                            context.SaveChanges();
-                        }
+                        var manager = new Manager();
+                        manager.WorkerId = worker.WorkerId;
+                        context.Managers.Add(manager);
+                        context.SaveChanges();
                     }
                 }
             }
         }
     }
+}

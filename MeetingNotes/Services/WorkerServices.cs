@@ -8,7 +8,7 @@ namespace MeetingNotes.Services
 {
     public interface IWorkerService
     {
-        Worker? GetWorkerById (int id);
+        Worker? GetWorkerById(int id);
         int CreateWorker(Worker worker);
         IEnumerable<Worker> GetWorkers();
         void DeleteWorker(int id);
@@ -24,7 +24,7 @@ namespace MeetingNotes.Services
         }
         public Worker? GetWorkerById(int id)
         {
-            var worker= _db.Workers.Where(w => w.WorkerId == id).FirstOrDefault();//firstordefault se brine da vrati null ako nema npr nekog workera sa odredenim id
+            var worker = _db.Workers.Where(w => w.WorkerId == id).FirstOrDefault();//firstordefault se brine da vrati null ako nema npr nekog workera sa odredenim id
             return worker;
         }
         public int CreateWorker(Worker worker)
@@ -32,9 +32,9 @@ namespace MeetingNotes.Services
             var user = new IdentityUser();//popunit njega 
             _db.Workers.Add(worker);
             _db.SaveChanges();
-            if (worker.IsManager==true)
+            if (worker.IsManager == true)
             {
-                var manager= new Manager();
+                var manager = new Manager();
                 manager.WorkerId = worker.WorkerId;
                 _db.Managers.Add(manager);
                 _db.SaveChanges();
@@ -57,7 +57,7 @@ namespace MeetingNotes.Services
         public int EditWorker(Worker worker)
         {
             //var worker = _db.Workers.Where(w => w.WorkerId == id).FirstOrDefault();
-            if (worker.IsManager==false)
+            if (worker.IsManager == false)
             {
                 var manager = _db.Managers.Where(w => w.WorkerId == worker.WorkerId).FirstOrDefault();
                 _db.Managers.Remove(manager);
@@ -67,7 +67,7 @@ namespace MeetingNotes.Services
             {
                 var manager = new Manager();
                 //var manager = _db.Managers.Where(w => w.WorkerId == worker.WorkerId).FirstOrDefault();
-                manager.WorkerId= worker.WorkerId;
+                manager.WorkerId = worker.WorkerId;
                 _db.Managers.Add(manager);
                 _db.SaveChanges();
             }

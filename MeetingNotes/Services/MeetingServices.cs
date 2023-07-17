@@ -33,13 +33,14 @@ namespace MeetingNotes.Services
         }
         public Meeting? GetMeetingById(int id)
         {
-            var meeting = _db.Meetings.Where(w=>w.MeetingId==id).Include(s=>s.notes).AsNoTracking().FirstOrDefault();
+            var meeting = _db.Meetings.Where(w => w.MeetingId == id).Include(s => s.notes).AsNoTracking().FirstOrDefault();
             return meeting;
         }
 
         public IEnumerable<MeetingViewModel> GetAllMeetingsViewModel()
         {
-            var result = _db.Meetings.Select(s => new MeetingViewModel {
+            var result = _db.Meetings.Select(s => new MeetingViewModel
+            {
                 MeetingId = s.MeetingId,
                 MeetingDate = s.MeetingDate,
                 ManagerFullName = _db.Workers.Where(w => w.WorkerId == s.ManagerId).Select(s => s.FirstName + "" + s.LastName).FirstOrDefault(),
