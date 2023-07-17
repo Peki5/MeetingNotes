@@ -13,6 +13,8 @@ namespace MeetingNotes.Models
         public int WorkerId { get; set; }
         public Notes notes { get; set; }
 
+        //navigacija na drugu tablicu da bi mogli preko id dohvacat workere
+
 
     }
 }
