@@ -1,5 +1,7 @@
 ﻿using MeetingNotes.Data;
 using MeetingNotes.Models;
+using MeetingNotes.Models.ViewModels;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using System.Numerics;
 
@@ -16,6 +18,9 @@ namespace MeetingNotes.Services
         void DeleteMeeting(int id);
 
         int EditMeeting(Meeting meeting);
+
+        IEnumerable<MeetingViewModel> GetAllMeetingsViewModel();
+
     }
 
     public class MeetingServices : IMeetingService
@@ -31,6 +36,19 @@ namespace MeetingNotes.Services
             var meeting = _db.Meetings.Where(w=>w.MeetingId==id).Include(s=>s.notes).AsNoTracking().FirstOrDefault();
             return meeting;
         }
+
+        public IEnumerable<MeetingViewModel> GetAllMeetingsViewModel()
+        {
+            var result = _db.Meetings.Select(s => new MeetingViewModel {
+                MeetingId = s.MeetingId,
+                MeetingDate = s.MeetingDate,
+                ManagerFullName = _db.Workers.Where(w => w.WorkerId == s.ManagerId).Select(s => s.FirstName + "" + s.LastName).FirstOrDefault(),
+                WorkerFullName = _db.Workers.Where(w => w.WorkerId == s.WorkerId).Select(s => s.FirstName + "" + s.LastName).FirstOrDefault()
+            }).ToList();
+
+            return result;
+        }
+
         public int CreateMeeting(Meeting meeting)
         {
             _db.Meetings.Add(meeting);
