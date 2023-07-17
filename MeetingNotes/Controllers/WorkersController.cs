@@ -9,8 +9,6 @@ using MeetingNotes.Data;
 using MeetingNotes.Models;
 using Microsoft.IdentityModel.Tokens;
 using MeetingNotes.Services;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace MeetingNotes.Controllers
 {
@@ -26,14 +24,10 @@ namespace MeetingNotes.Controllers
             _workerService = workerService;
         }
 
-
-
         // GET: Workers
-        //[Authorize]
         public async Task<IActionResult> Index()
         {
             return View(_workerService.GetWorkers());
-
             //return _context.Workers != null ? 
             //            View(await _context.Workers.ToListAsync()) :
             //            Problem("Entity set 'ApplicationDbContext.Workers'  is null.");

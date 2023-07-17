@@ -2,7 +2,6 @@
 using MeetingNotes.Models;
 using System.Numerics;
 using MeetingNotes.Services;
-using Microsoft.AspNetCore.Identity;
 
 namespace MeetingNotes.Services
 {
@@ -29,7 +28,6 @@ namespace MeetingNotes.Services
         }
         public int CreateWorker(Worker worker)
         {
-            var user = new IdentityUser();//popunit njega 
             _db.Workers.Add(worker);
             _db.SaveChanges();
             if (worker.IsManager==true)
