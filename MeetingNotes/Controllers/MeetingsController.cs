@@ -30,7 +30,7 @@ namespace MeetingNotes.Controllers
               //return _context.Meetings != null ? 
               //            View(await _context.Meetings.ToListAsync()) :
               //            Problem("Entity set 'ApplicationDbContext.Meetings'  is null.");
-              return View(_meetingService.GetMeetings());
+              return View(_meetingService.GetAllMeetingsViewModel());
         }
 
         // GET: Meetings/Details/5

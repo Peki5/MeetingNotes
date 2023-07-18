@@ -43,8 +43,8 @@ namespace MeetingNotes.Services
             {
                 MeetingId = s.MeetingId,
                 MeetingDate = s.MeetingDate,
-                ManagerFullName = _db.Workers.Where(w => w.WorkerId == s.ManagerId).Select(s => s.FirstName + "" + s.LastName).FirstOrDefault(),
-                WorkerFullName = _db.Workers.Where(w => w.WorkerId == s.WorkerId).Select(s => s.FirstName + "" + s.LastName).FirstOrDefault()
+                ManagerFullName = _db.Workers.Where(w => w.WorkerId == s.ManagerId).Select(s => s.FirstName + " " + s.LastName).FirstOrDefault(),
+                WorkerFullName = _db.Workers.Where(w => w.WorkerId == s.WorkerId).Select(s => s.FirstName + " " + s.LastName).FirstOrDefault()
             }).ToList();
 
             return result;
