@@ -33,6 +33,17 @@
                 <input asp-for="IsManager" type="checkbox"  class="form-check-control" />
                 <span asp-validation-for="IsManager" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="IdentityUser.Id" />
+            <div class="form-group">
+                <label asp-for="IdentityUser.Email" class="control-label"></label>
+                <input asp-for="IdentityUser.Email" class="form-control" />
+                <span asp-validation-for="IdentityUser.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdentityUser.UserName" class="control-label"></label>
+                <input asp-for="IdentityUser.UserName" class="form-control" />
+                <span asp-validation-for="IdentityUser.UserName" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

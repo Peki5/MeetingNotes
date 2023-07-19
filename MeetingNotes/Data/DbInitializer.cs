@@ -50,8 +50,8 @@ namespace MeetingNotes.Data
                     },
                     new()
                     {
-                        Name = "Instructor",
-                        NormalizedName = "INSTRUCTOR"
+                        Name = "Worker",
+                        NormalizedName = "WORKER"
                     },
                     new()
                     {
@@ -63,42 +63,42 @@ namespace MeetingNotes.Data
                 context.AddRange(identityRoles);
                 context.SaveChanges();
             }
-            if (context.Workers.Any())
+            if (!context.Workers.Any())
             {
                 return;   // DB has been seeded
             }
-            var workers = new Worker[]
-            {
-                new Worker{ LastName="Horvat", FirstName="Ivan", EnrollmentDate= DateTime.Parse("2010-09-01")},
-                new Worker{ LastName="Marić", FirstName="Marko", EnrollmentDate= DateTime.Parse("2022-02-02")}
-            };
-            foreach (Worker w in workers)
-            {
-                context.Workers.Add(w);
-            }
-            context.SaveChanges();
+            //var workers = new Worker[]
+            //{
+            //    new Worker{ LastName="Horvat", FirstName="Ivan", EnrollmentDate= DateTime.Parse("2010-09-01")},
+            //    new Worker{ LastName="Marić", FirstName="Marko", EnrollmentDate= DateTime.Parse("2022-02-02")}
+            //};
+            //foreach (Worker w in workers)
+            //{
+            //    context.Workers.Add(w);
+            //}
+            //context.SaveChanges();
 
-            var meeting = new Meeting[]
-            {
-                new Meeting{ MeetingDate=DateTime.Parse("2013-04-05")},
-                new Meeting{ MeetingDate=DateTime.Parse("2014-07-08")}
-            };
-            foreach (Meeting m in meeting)
-            {
-                context.Meetings.Add(m);
-            }
-            context.SaveChanges();
+            //var meeting = new Meeting[]
+            //{
+            //    new Meeting{ MeetingDate=DateTime.Parse("2013-04-05")},
+            //    new Meeting{ MeetingDate=DateTime.Parse("2014-07-08")}
+            //};
+            //foreach (Meeting m in meeting)
+            //{
+            //    context.Meetings.Add(m);
+            //}
+            //context.SaveChanges();
 
-            var notes = new Notes[]
-            {
-                new Notes{ NotesText="Uvodni sastanak u firmi",
-                    MeetingId=meeting.Single(s=>s.MeetingDate.Equals("2013-04-05")).MeetingId}
-            };
-            foreach (Notes n in notes)
-            {
-                context.Notes.Add(n);
-            }
-            context.SaveChanges();
+            //var notes = new Notes[]
+            //{
+            //    new Notes{ NotesText="Uvodni sastanak u firmi",
+            //        MeetingId=meeting.Single(s=>s.MeetingDate.Equals("2013-04-05")).MeetingId}
+            //};
+            //foreach (Notes n in notes)
+            //{
+            //    context.Notes.Add(n);
+            //}
+            //context.SaveChanges();
 
 
             if (!context.Managers.Any())

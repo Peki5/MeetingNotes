@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using MeetingNotes.Services;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using MeetingNotes.Models.ViewModels;
 
 namespace MeetingNotes.Controllers
 {
@@ -69,13 +70,15 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("WorkerId,LastName,FirstName,EnrollmentDate,IsManager")] Worker worker)
+        public async Task<IActionResult> Create(CreateWorkerModel worker)
         {
             if (ModelState.IsValid)
             {
                 //_context.Add(worker);
                 //await _context.SaveChangesAsync();
-                _workerService.CreateWorker(worker);
+                //_workerService.CreateWorker(worker);
+                await _workerService.CreateWorkerModel(worker);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(worker);
@@ -103,7 +106,7 @@ namespace MeetingNotes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("WorkerId,LastName,FirstName,EnrollmentDate,IsManager")] Worker worker)
+        public async Task<IActionResult> Edit( Worker worker)
         {
             if (worker.WorkerId == null)
             {
