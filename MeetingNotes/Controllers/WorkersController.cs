@@ -119,7 +119,7 @@ namespace MeetingNotes.Controllers
                 {
                     //_context.Update(worker);
                     //await _context.SaveChangesAsync();
-                    _workerService.EditWorker(worker);
+                    _workerService.EditWorkerAsync(worker);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -170,7 +170,7 @@ namespace MeetingNotes.Controllers
             //{
             //    _context.Workers.Remove(worker);
             //}
-            _workerService.DeleteWorker(id);
+            _workerService.DeleteWorkerAsync(id);
 
             //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

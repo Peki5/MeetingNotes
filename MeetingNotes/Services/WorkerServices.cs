@@ -13,15 +13,16 @@ namespace MeetingNotes.Services
         Worker? GetWorkerById(int id);
         int CreateWorker(Worker worker);
         IEnumerable<Worker> GetWorkers();
-        void DeleteWorker(int id);
+        Task DeleteWorkerAsync(int id);
 
-        int EditWorker(Worker worker);
+        Task<int> EditWorkerAsync(Worker worker);
         Task<int> CreateWorkerModel(CreateWorkerModel model);
     }
     public class WorkerServices : IWorkerService
     {
         private readonly ApplicationDbContext _db;
         private readonly UserManager<IdentityUser> _userManager;
+
         public WorkerServices(ApplicationDbContext db, UserManager<IdentityUser> userManager)
         {
             _db = db;
@@ -50,10 +51,15 @@ namespace MeetingNotes.Services
         public async Task<int> CreateWorkerModel(CreateWorkerModel model)
         {
             var user = new IdentityUser();
-            user.UserName = model.Username;
+            user.UserName = model.Email;
             user.Email = model.Email;
             user.NormalizedEmail = model.Email.ToUpper();
             user.NormalizedUserName = model.Username.ToUpper();
+            user.EmailConfirmed = true;
+            var password=model.Password;
+
+            PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
+            user.PasswordHash = ph.HashPassword(user, password);
 
             var result = await _userManager.CreateAsync(user);
 
@@ -82,9 +88,12 @@ namespace MeetingNotes.Services
 
 
 
-        public void DeleteWorker(int id)
+        public async Task DeleteWorkerAsync(int id)
         {
-            var worker = _db.Workers.Where(w => w.WorkerId == id).FirstOrDefault();
+            var worker = _db.Workers.Where(w => w.WorkerId == id).Include(s => s.IdentityUser).AsNoTracking().FirstOrDefault();
+            var identity = new IdentityUser();
+            identity = worker.IdentityUser;
+            await _userManager.DeleteAsync(identity);
             _db.Workers.Remove(worker);
             _db.SaveChanges();
             if (worker.IsManager == true)
@@ -95,7 +104,7 @@ namespace MeetingNotes.Services
             }
         }
 
-        public int EditWorker(Worker worker)
+        public async Task<int> EditWorkerAsync(Worker worker)
         {
             //var worker = _db.Workers.Where(w => w.WorkerId == id).FirstOrDefault();
             //if (worker.IsManager == false)
@@ -112,6 +121,9 @@ namespace MeetingNotes.Services
                 _db.Managers.Add(manager);
                 _db.SaveChanges();
             }
+            //var identity = new IdentityUser();
+            //identity = worker.IdentityUser;
+            //await _userManager.UpdateAsync(identity); ne smijemo editat username i email!!!
             _db.Workers.Update(worker);
             _db.SaveChanges();
             return worker.WorkerId;
