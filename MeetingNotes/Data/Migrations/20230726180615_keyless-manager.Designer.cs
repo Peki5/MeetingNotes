@@ -4,6 +4,7 @@ using MeetingNotes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingNotes.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230726180615_keyless-manager")]
+    partial class keylessmanager
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,15 +258,15 @@ namespace MeetingNotes.Data.Migrations
                         {
                             Id = "22e40406-8a9d-2d82-912c-5d6a640ee696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d74c7026-ac91-484c-8502-5b02523c5852",
+                            ConcurrencyStamp = "9cbefb56-1273-42b9-b8c0-6b59b59f8a48",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHUtRjMMtWFQ/w8rtROLkEV4HJoq/j1tDabNaHTKidWUUFlLj3B06at7eUEZ9cmmvw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAx/QNhb7mdbpL8tvjVploorMcJXCyJj6n/6/QVFjWLhnLPYhZPWfL+jo4y99U0vOQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a50c8215-e497-4b29-a27d-d550b36b3360",
+                            SecurityStamp = "eb3e01e6-7cbe-419c-85e9-337fd71e30a0",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

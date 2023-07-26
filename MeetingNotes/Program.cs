@@ -1,3 +1,4 @@
+using MeetingManager.Services;
 using MeetingNotes.Data;
 using MeetingNotes.Services;
 using Microsoft.AspNetCore.Identity;
@@ -24,7 +25,8 @@ namespace MeetingNotes
             builder.Services.AddTransient<IWorkerService, WorkerServices>();//dz proucit ovo
             builder.Services.AddTransient<IMeetingService, MeetingServices>();
             builder.Services.AddTransient<INotesService, NotesServices>();
-            
+            builder.Services.AddTransient<IManagerService, ManagerServices>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

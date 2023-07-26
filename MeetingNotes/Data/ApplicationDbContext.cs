@@ -22,9 +22,10 @@ namespace MeetingNotes.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Worker>().ToTable("Worker");
-            modelBuilder.Entity<Manager>().ToTable("Manager");
+            modelBuilder.Entity<Manager>().ToTable("Manager").HasNoKey();
             modelBuilder.Entity<Meeting>().ToTable("Meeting");
             modelBuilder.Entity<Notes>().ToTable("Notes");
+
 
             base.OnModelCreating(modelBuilder);
 

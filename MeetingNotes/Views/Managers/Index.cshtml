@@ -1,0 +1,30 @@
+﻿@model MeetingNotes.Models.ViewModels.ManagerWorkerPairingModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Managers)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Managers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

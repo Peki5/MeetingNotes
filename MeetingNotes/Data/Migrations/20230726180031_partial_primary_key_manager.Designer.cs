@@ -4,6 +4,7 @@ using MeetingNotes.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MeetingNotes.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230726180031_partial_primary_key_manager")]
+    partial class partial_primary_key_manager
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,10 +28,14 @@ namespace MeetingNotes.Data.Migrations
             modelBuilder.Entity("MeetingNotes.Models.Manager", b =>
                 {
                     b.Property<int>("ManagerId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(1);
 
                     b.Property<int>("WorkerId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnOrder(2);
+
+                    b.HasKey("ManagerId", "WorkerId");
 
                     b.ToTable("Manager", (string)null);
                 });
@@ -255,15 +262,15 @@ namespace MeetingNotes.Data.Migrations
                         {
                             Id = "22e40406-8a9d-2d82-912c-5d6a640ee696",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d74c7026-ac91-484c-8502-5b02523c5852",
+                            ConcurrencyStamp = "d2fe480a-9b9e-473d-8502-b38c48a516a5",
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHUtRjMMtWFQ/w8rtROLkEV4HJoq/j1tDabNaHTKidWUUFlLj3B06at7eUEZ9cmmvw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHs24y9DBnxcFdWVf0MLOHSnHWQmVcThvW1xRCYLAzkLIW9c3nhbOvKYILkjV/Xgbg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a50c8215-e497-4b29-a27d-d550b36b3360",
+                            SecurityStamp = "15bece05-b69b-4b88-9e3e-a483481db58d",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         });

@@ -65,11 +65,12 @@ namespace MeetingNotes.Services
 
             if (model.IsManager == true)
             {
-                var result2 = await _userManager.AddToRoleAsync(user, "Manager");
+                await _userManager.AddToRoleAsync(user, "Manager");
+                await _userManager.AddToRoleAsync(user, "Worker");//manager mora imat obje role
             }
             else
             {
-                var result2 = await _userManager.AddToRoleAsync(user, "Worker");
+                await _userManager.AddToRoleAsync(user, "Worker");
             }
 
             var worker = new Worker();
@@ -96,12 +97,12 @@ namespace MeetingNotes.Services
             await _userManager.DeleteAsync(identity);
             _db.Workers.Remove(worker);
             _db.SaveChanges();
-            if (worker.IsManager == true)
-            {
-                var manager = _db.Managers.Where(w => w.WorkerId == worker.WorkerId).FirstOrDefault();
-                _db.Managers.Remove(manager);
-                _db.SaveChanges();
-            }
+            //if (worker.IsManager == true)
+            //{
+            //    var manager = _db.Managers.Where(w => w.WorkerId == worker.WorkerId).FirstOrDefault();
+            //    _db.Managers.Remove(manager);
+            //    _db.SaveChanges();
+            //}
         }
 
         public async Task<int> EditWorkerAsync(Worker worker)
@@ -113,14 +114,18 @@ namespace MeetingNotes.Services
             //    _db.Managers.Remove(manager);
             //    _db.SaveChanges();
             //}
-            if (worker.IsManager == true)
-            {
-                var manager = new Manager();
-                //var manager = _db.Managers.Where(w => w.WorkerId == worker.WorkerId).FirstOrDefault();
-                manager.WorkerId = worker.WorkerId;
-                _db.Managers.Add(manager);
-                _db.SaveChanges();
-            }
+
+
+            //if (worker.IsManager == true)
+            //{
+            //    var manager = new Manager();
+            //    //var manager = _db.Managers.Where(w => w.WorkerId == worker.WorkerId).FirstOrDefault();
+            //    manager.WorkerId = worker.WorkerId;
+            //    _db.Managers.Add(manager);
+            //    _db.SaveChanges();
+            //}
+
+
             //var identity = new IdentityUser();
             //identity = worker.IdentityUser;
             //await _userManager.UpdateAsync(identity); ne smijemo editat username i email!!!

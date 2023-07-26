@@ -11,7 +11,7 @@ namespace MeetingNotes.Models
         public int ManagerId { get; set; }
         [Required]
         public int WorkerId { get; set; }
-        public Notes notes { get; set; }
+        public Notes notes { get; set; }//lista notesa, ili public ili private
 
         //navigacija na drugu tablicu da bi mogli preko id dohvacat workere 
 

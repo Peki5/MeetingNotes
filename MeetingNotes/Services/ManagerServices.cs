@@ -1,6 +1,10 @@
 ﻿using MeetingNotes.Data;
 using MeetingNotes.Models;
 using System.Numerics;
+using MeetingNotes.Services;
+using Microsoft.AspNetCore.Identity;
+using MeetingNotes.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeetingManager.Services
 {
@@ -15,6 +19,10 @@ namespace MeetingManager.Services
         void DeleteManager(int id);
 
         int EditManager(Manager manager);
+
+        ManagerWorkerPairingModel GetAllManagersViewModel();
+
+        Task<int> CreateManagerModel(CreateManagerModel model);
     }
 
     public class ManagerServices : IManagerService
@@ -53,6 +61,58 @@ namespace MeetingManager.Services
             _db.Managers.Update(manager);
             _db.SaveChanges();
             return manager.ManagerId;
+        }
+
+        public ManagerWorkerPairingModel GetAllManagersViewModel()
+        {
+            var workers = _db.Workers.Select(s => new WorkerSelectionViewModel
+            {
+                Id = s.WorkerId,
+                FullName = s.FirstName + " " + s.LastName
+            }).ToList();
+
+            var managers = _db.Workers.Where(w=>w.IsManager==true).Select(s => new WorkerSelectionViewModel
+            {
+                Id = s.WorkerId,
+                FullName = s.FirstName + " " + s.LastName
+            }).ToList();
+
+            var viewModel = new ManagerWorkerPairingModel
+            {
+                Managers = managers,
+                Workers = workers,
+            };
+
+            return viewModel;
+        }
+
+        public async Task<int> CreateManagerModel(CreateManagerModel model)
+        {
+
+            // Process the data and save it to your data source
+            // Create a list of Manager entities based on the selected WorkerIds
+            List<Manager> managers = model.SelectedWorkerIds.Select(workerId => new Manager
+            {
+                ManagerId = model.SelectedManagerId,
+                WorkerId = workerId
+            }).ToList();
+
+            // Enable IDENTITY_INSERT for the 'Manager' table
+            _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Manager ON");
+
+            // Save the managers to the database
+            foreach (var manager in managers)
+            {
+                _db.Managers.Add(manager);
+                _db.SaveChanges();
+            }
+
+            // Disable IDENTITY_INSERT for the 'Manager' table
+            _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Manager OFF");
+
+            // Redirect to a different page after successful creation
+
+            return model.SelectedManagerId;
         }
     }
 }
