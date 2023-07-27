@@ -88,31 +88,34 @@ namespace MeetingManager.Services
 
         public async Task<int> CreateManagerModel(CreateManagerModel model)
         {
-
-            // Process the data and save it to your data source
-            // Create a list of Manager entities based on the selected WorkerIds
-            List<Manager> managers = model.SelectedWorkerIds.Select(workerId => new Manager
+            try
             {
-                ManagerId = model.SelectedManagerId,
-                WorkerId = workerId
-            }).ToList();
 
-            // Enable IDENTITY_INSERT for the 'Manager' table
-            _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Manager ON");
 
-            // Save the managers to the database
-            foreach (var manager in managers)
-            {
-                _db.Managers.Add(manager);
-                _db.SaveChanges();
+                // Process the data and save it to your data source
+                // Create a list of Manager entities based on the selected WorkerIds
+                List<Manager> managers = model.SelectedWorkerIds.Select(workerId => new Manager
+                {
+                    ManagerId = model.SelectedManagerId,
+                    WorkerId = workerId
+                }).ToList();
+
+
+                // Save the managers to the database
+                foreach (var manager in managers)
+                {
+                    _db.Managers.Add(manager);
+                    _db.SaveChanges();
+                }
+                // Redirect to a different page after successful creation
+
+                return model.SelectedManagerId;
+            }
+            catch (Exception ex) {
+                return 0;
             }
 
-            // Disable IDENTITY_INSERT for the 'Manager' table
-            _db.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Manager OFF");
-
-            // Redirect to a different page after successful creation
-
-            return model.SelectedManagerId;
+            
         }
     }
 }

@@ -18,7 +18,7 @@ namespace MeetingNotes.Controllers
 {
     public class ManagersController : Controller
     {
-        private readonly ApplicationDbContext _context;  
+        private readonly ApplicationDbContext _context;
         private readonly IManagerService _managerService;
 
 
